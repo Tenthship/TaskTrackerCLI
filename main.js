@@ -10,8 +10,8 @@ const rl = readline.createInterface({
 
 function options_menu() {
     console.log("1) Enter a new task") // Complete
-    console.log("2) Update a task")
-    console.log("3) Delete a task")
+    console.log("2) Update a task") // Complete
+    console.log("3) Delete a task") // Complete
     console.log("4) Change task status")
     console.log("5) Display all tasks")
     console.log("6) List all tasks that are done")
@@ -49,6 +49,7 @@ function user_input() {
     })
 }
 
+// Option # 2
 function update_task() {
     tasks_length = data.tasks.length
     if (tasks_length == 0) {
@@ -71,6 +72,59 @@ function update_task() {
 
 }
 
+// Option # 3
+function delete_task() { // Complete
+    tasks_length = data.tasks.length
+    rl.question("Which task would you like to delete: ", (task_id) => {
+        if (task_id >= 0 && task_id <= tasks_length) {
+            data.tasks.splice(task_id, 1)
+            fs.writeFileSync(FILE, JSON.stringify(data, null, 2))
+        } else {
+            console.log("Please enter a valid task id")
+        }
+        main()
+    })
+}
+
+// Option # 4
+function change_task_status() {
+    tasks_length = data.tasks.length
+    rl.question("Which task would you like to change the status of: " , (task_id) => {
+        task_id = parseInt(task_id)
+        if (task_id >= 0 && task_id <= tasks_length) {
+            rl.question("1) Todo\n2) In Progress\n3) Complete", (task_status) => {
+                switch(task_status) {
+                    case "1":
+                        data.tasks[task_id].status = "Todo"
+                        break
+                    case "2":
+                        data.tasks[task_id].status = "In Progress"
+                        break
+                    case "3":
+                        data.tasks[task_id].status = "Complete"
+                        break
+                    default:
+                        console.log("Please enter a valid option")
+                        break
+                }
+                fs.writeFileSync(FILE, JSON.stringify(data, null, 2))
+
+                main()
+            })
+        } else {
+            console.log("Please enter a valid task id")
+            main()
+        }
+
+    })
+}
+
+// function show_tasks() {
+//     for (let i = 0; i < data.tasks.length; i++) {
+
+//     }
+// }
+
 function main() {
     console.log("Hello and welcome to task tracker CLI!!!\n")
     options_menu()
@@ -81,6 +135,12 @@ function main() {
                 break
             case "2":
                 update_task()
+                break
+            case "3":
+                delete_task()
+                break
+            case "4":
+                change_task_status()
                 break
             default:
                 console.log("Please enter a valid response")
