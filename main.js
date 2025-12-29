@@ -119,11 +119,13 @@ function change_task_status() {
     })
 }
 
-// function show_tasks() {
-//     for (let i = 0; i < data.tasks.length; i++) {
+function show_tasks() {
+    for (let i = 0; i < data.tasks.length; i++) {
+        console.log(data.tasks[i].task)
+    }
 
-//     }
-// }
+    main()
+}
 
 function main() {
     console.log("Hello and welcome to task tracker CLI!!!\n")
@@ -141,6 +143,9 @@ function main() {
                 break
             case "4":
                 change_task_status()
+                break
+            case "5":
+                show_tasks()
                 break
             default:
                 console.log("Please enter a valid response")
