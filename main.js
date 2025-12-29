@@ -8,15 +8,24 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+function initialize() {
+    if (fs.existsSync(FILE)) {
+        const contents = fs.readFileSync(FILE, "utf8");
+        if (contents.trim() !== "") {
+            data = JSON.parse(contents);
+        }
+    }
+}
+
 function options_menu() {
     console.log("1) Enter a new task") // Complete
     console.log("2) Update a task") // Complete
     console.log("3) Delete a task") // Complete
-    console.log("4) Change task status")
-    console.log("5) Display all tasks")
-    console.log("6) List all tasks that are done")
-    console.log("7) List all tasks that are not done")
-    console.log("8) List all tasks that are in progress")
+    console.log("4) Change task status") // Complete
+    console.log("5) Display all tasks") // Complete
+    // console.log("6) List all tasks that are done")
+    // console.log("7) List all tasks that are not done")
+    // console.log("8) List all tasks that are in progress")
 }
 
 let data = { tasks: [] }
@@ -24,14 +33,6 @@ let data = { tasks: [] }
 // Option #1
 function user_input() {
     rl.question("Enter a task: ", (answer) => {
-
-
-        if (fs.existsSync(FILE)) {
-            const contents = fs.readFileSync(FILE, "utf8");
-            if (contents.trim() !== "") {
-                data = JSON.parse(contents);
-            }
-        }
 
         let currentTime = new Date()
 
@@ -154,5 +155,6 @@ function main() {
 
 }
 
+initialize()
 main()
 
